@@ -82,7 +82,6 @@
     YKFLogNSError(error);
     
     self.nfcOTPResponseBlock(nil, error);
-    self.nfcOTPResponseBlock = nil;
 }
 
 - (void)readerSession:(NFCNDEFReaderSession *)session didDetectNDEFs:(NSArray<NFCNDEFMessage *> *)messages {
@@ -91,11 +90,9 @@
     id<YKFOTPTokenProtocol> otpToken = [self.otpTokenParser otpTokenFromNfcMessages:messages];
     if (otpToken) {
         self.nfcOTPResponseBlock(otpToken, nil);
-        self.nfcOTPResponseBlock = nil;
     } else {
         YKFNFCError *error = [YKFNFCError noTokenAfterScanError];
         self.nfcOTPResponseBlock(nil, error);
-        self.nfcOTPResponseBlock = nil;
     }
 }
 
